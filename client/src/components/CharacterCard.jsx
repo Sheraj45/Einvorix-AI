@@ -1,6 +1,7 @@
-const CharacterCard = ({ name, role, emoji }) => {
+const CharacterCard = ({ name, role, emoji, onClick }) => {
   return (
     <div
+      onClick={onClick}
       style={{
         width: "220px",
         padding: "20px",

@@ -1,4 +1,5 @@
 import CharacterCard from "../components/CharacterCard";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const characters = [
@@ -18,6 +19,16 @@ const Dashboard = () => {
       emoji: "🚀",
     },
   ];
+
+  const navigate = useNavigate();
+  const openChat = (character) => {
+    navigate("/chat", {
+      state: {
+        character,
+      },
+    });
+  };
+
   return (
     <div
       style={{
@@ -44,6 +55,7 @@ const Dashboard = () => {
             name={character.name}
             role={character.role}
             emoji={character.emoji}
+            onClick={() => openChat(character)}
           />
         ))}
       </div>
