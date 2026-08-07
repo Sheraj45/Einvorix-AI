@@ -2,7 +2,7 @@ const { generateResponse } = require("../services/gemini.service");
 
 const chat = async (req, res, next) => {
   try {
-    const { prompt } = req.body;
+    const { prompt, character } = req.body;
 
     if (!prompt) {
       return res.status(400).json({
@@ -10,7 +10,7 @@ const chat = async (req, res, next) => {
       });
     }
 
-    const response = await generateResponse(prompt);
+    const response = await generateResponse(character, prompt);
 
     res.status(200).json({
       success: true,

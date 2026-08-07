@@ -38,6 +38,7 @@ const Chat = () => {
         "http://localhost:5000/api/chat",
         {
           prompt,
+          character: character.name,
         },
         {
           headers: {
