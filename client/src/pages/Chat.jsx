@@ -39,6 +39,7 @@ const Chat = () => {
         {
           prompt,
           character: character.name,
+          history: messages,
         },
         {
           headers: {

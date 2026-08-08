@@ -4,7 +4,16 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
-const generateResponse = async (character, prompt) => {
+const generateResponse = async (character, prompt, history) => {
+  const conversationHistory = (history || []).map((msg) => ({
+    role: msg.sender === "user" ? "user" : "model",
+    parts: [
+      {
+        text: msg.text,
+      },
+    ],
+  }));
+
   let systemPrompt = "";
 
   switch (character) {
@@ -66,16 +75,31 @@ Stay helpful and professional.
 `;
   }
 
-  const fullPrompt = `
-${systemPrompt}
+  const contents = [
+    {
+      role: "user",
+      parts: [
+        {
+          text: systemPrompt,
+        },
+      ],
+    },
 
-User:
-${prompt}
-`;
+    ...conversationHistory,
+
+    {
+      role: "user",
+      parts: [
+        {
+          text: prompt,
+        },
+      ],
+    },
+  ];
 
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
-    contents: fullPrompt,
+    contents,
   });
 
   return response.text;
